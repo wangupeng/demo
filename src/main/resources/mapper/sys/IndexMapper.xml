@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.critc.plat.sys.dao.IndexDao">
+
+    <!--事件查询-->
+    <select id="listEventByUser" parameterType="Index" resultType="Index">
+      select EVENT_ID, to_char(EVENT_DATE,'yyyy-MM-dd') EVENT_DATE, USER_NAME, EVENT_CONTENT
+      from DEMO_INDEX_EVENT
+      where USER_NAME = #{userName}
+        and EVENT_DATE <![CDATA[>=]]> to_date(#{eventDateStart},'yyyy-MM-dd')
+        and EVENT_DATE <![CDATA[<=]]> to_date(#{eventDateEnd},'yyyy-MM-dd')
+      order by EVENT_DATE,EVENT_ID
+    </select>
+    <!--插入事件-->
+    <insert id="addEvent" parameterType="Index">
+      insert into DEMO_INDEX_EVENT
+        (EVENT_ID, EVENT_DATE, USER_NAME, EVENT_CONTENT)
+        VALUES
+        (#{eventId},to_date(#{eventDate},'yyyy-MM-dd'),#{userName},#{eventContent})
+    </insert>
+
+    <!--修改事件-->
+    <update id="updateEventContent" parameterType="Index">
+      update DEMO_INDEX_EVENT SET EVENT_CONTENT = #{eventContent} where EVENT_ID = #{eventId}
+    </update>
+
+    <!--删除事件-->
+    <delete id="deleteEventById" parameterType="String">
+        delete from DEMO_INDEX_EVENT where EVENT_ID = #{eventId}
+    </delete>
+
+
+
+</mapper>

@@ -1,0 +1,164 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../common/taglib.jsp" %>
+<div id="navbar" class="navbar navbar-default ace-save-state  navbar-fixed-top">
+	<div class="navbar-container ace-save-state" id="navbar-container">
+		<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+			<span class="sr-only">Toggle sidebar</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+		</button>
+		<div class="navbar-header pull-left">
+			<!-- #section:basics/navbar.layout.brand -->
+			<a href="/pmis/index" class="navbar-brand"> <small><i class="fa fa-leaf"></i> ${webTitle}</small>
+			</a>
+		</div>
+
+		<!-- #section:basics/navbar.dropdown -->
+		<div class="navbar-buttons navbar-header pull-right" role="navigation">
+			<ul class="nav ace-nav">
+				<%--<li class="grey dropdown-modal">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="ace-icon fa fa-tasks"></i>
+						<span class="badge badge-grey">4</span>
+					</a>
+
+					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-header">
+							<i class="ace-icon fa fa-check"></i>
+							4 Tasks to complete
+						</li>
+
+						<li class="dropdown-content">
+							<ul class="dropdown-menu dropdown-navbar">
+								<li>
+									<a href="#">
+										<div class="clearfix">
+											<span class="pull-left">Bug Fixes</span>
+											<span class="pull-right">90%</span>
+										</div>
+
+										<div class="progress progress-mini progress-striped active">
+											<div style="width:90%" class="progress-bar progress-bar-success"></div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown-footer">
+							<a href="#">
+								See tasks with details
+								<i class="ace-icon fa fa-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>--%>
+
+				<shiro:hasPermission name="/codeReview/notification">
+					<li class="purple dropdown-modal">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+							<span class="badge badge-important" id="notificationsNum1"></span>
+						</a>
+						<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+							<li class="dropdown-header">
+								<i class="ace-icon fa fa-exclamation-triangle" id="notificationsNum2"></i>
+
+							</li>
+
+							<li class="dropdown-content">
+								<ul class="dropdown-menu dropdown-navbar navbar-pink" id="notifications">
+								</ul>
+							</li>
+							<li class="dropdown-footer">
+								<a href="codeReview">
+									查看所有审查结果
+									<i class="ace-icon fa fa-arrow-right"></i>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</shiro:hasPermission>
+				<%--<li class="green dropdown-modal">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+						<span class="badge badge-success">5</span>
+					</a>
+
+					<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-header">
+							<i class="ace-icon fa fa-envelope-o"></i>
+							5 Messages
+						</li>
+
+						<li class="dropdown-content">
+							<ul class="dropdown-menu dropdown-navbar">
+								<li>
+									<a href="#" class="clearfix">
+										<img src="../assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+										<span class="msg-body">
+											<span class="msg-title">
+												<span class="blue">Alex:</span>
+												Ciao sociis natoque penatibus et auctor ...
+											</span>
+
+											<span class="msg-time">
+												<i class="ace-icon fa fa-clock-o"></i>
+												<span>a moment ago</span>
+											</span>
+											</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown-footer">
+							<a href="inbox.html">
+								See all messages
+								<i class="ace-icon fa fa-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>--%>
+				<!-- #section:basics/navbar.user_menu -->
+				<li class="light-blue dropdown-modal">
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+						<img class="nav-user-photo" src="${staticServer}/assets/ace1.4/images/avatars/avatar2.png" alt="Jason's Photo" />
+						<span class="user-info">
+							<small>${sessionScope.userSession.roleName }</small>
+							${sessionScope.userSession.realName }
+						</span> <i class="ace-icon fa fa-caret-down"></i>
+					</a>
+					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+						<li><a href="${staticServer}/sysUser/toUpdatePassWord"> <i class="ace-icon fa fa-cog"></i> 修改密码
+						</a></li>
+						<%--<li><a href="${dynamicServer }/base/shop/profile.htm"> <i class="ace-icon fa fa-user"></i> 修改个人信息
+						</a></li>--%>
+						<li class="divider"></li>
+						<li><a href="/demo/logout"> <i class="ace-icon fa fa-power-off"></i> 退出
+						</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<shiro:hasPermission name="/codeReview/notification">
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url: '${staticServer}/codeReview/listCodeReviewNoDeal',
+            dataType: 'json',
+            success: function(data) {
+                $("#notificationsNum1").html(data.length);
+                $("#notificationsNum2").append("&nbsp;有 "+data.length+" 次代码审查结果未处理");
+                var str = '';
+                $.each(data,function(i,item) {
+                    str += '<li><a href="${staticServer}/codeReview/listCodeReviewResult?reviewId='+item.reviewId+'">' +
+							'<div class="clearfix"><span class="pull-left"><i class="btn btn-xs no-hover btn-info fa fa-check-square-o"></i> '+item.reviewUserName+' '+item.reviewDate+' 审查</span></div>' +
+							'</a></li>';
+                });
+                $("#notifications").append(str);
+            }
+        });
+    });
+</script>
+</shiro:hasPermission>

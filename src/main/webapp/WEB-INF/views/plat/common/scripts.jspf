@@ -1,0 +1,55 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!-- basic scripts -->
+
+<script src="${staticServer}/assets/ace1.4/js/jCookie.js"></script>
+
+<script src="${staticServer}/assets/ace1.4_components/bootstrap/dist/js/bootstrap.js"></script>
+<!-- page specific plugin scripts -->
+<!--[if lte IE 8]>
+<script src="${staticServer}/assets/ace1.4_components/ExplorerCanvas/excanvas.js"></script>
+<![endif]-->
+<script src="${staticServer}/assets/ace1.4_components/_mod/jquery-ui.custom/jquery-ui.custom.js"></script>
+<%--<script src="${staticServer}/assets/ace1.4_components/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>--%>
+<script src="${staticServer}/assets/ace1.4_components/_mod/easypiechart/jquery.easypiechart.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/jquery.sparkline/index.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/Flot/jquery.flot.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/Flot/jquery.flot.pie.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/Flot/jquery.flot.resize.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/fuelux/js/spinbox.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script src="${staticServer}/assets/ace1.4_components/bootbox/bootbox.js"></script>
+
+<!-- ace scripts -->
+<script src="${staticServer}/assets/ace1.4/js/src/elements.scroller.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.colorpicker.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.fileinput.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.typeahead.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.wysiwyg.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.spinner.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.treeview.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.wizard.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/elements.aside.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.basics.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.scrolltop.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.ajax-content.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.touch-drag.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.sidebar.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.sidebar-scroll-1.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.submenu-hover.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.widget-box.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.settings.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.settings-rtl.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.settings-skin.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.widget-on-reload.js"></script>
+<script src="${staticServer}/assets/ace1.4/js/src/ace.searchbox-autocomplete.js"></script>
+
+<script src="${staticServer}/assets/ace1.4_components/jquery-validation/dist/jquery.validate.js"></script>
+<script src="${staticServer}/assets/common/js/common.js" type="text/javascript"></script>
+<script src="${staticServer}/assets/wangEditor/release/wangEditor.min.js"></script>
+
+<script src="${staticServer}/assets/zTree3.5/js/jquery.ztree.all-3.5.min.js"></script>
