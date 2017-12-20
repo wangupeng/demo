@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +184,17 @@ public class StringUtil {
             parameters += obj[i].toString() + "=" + request.getParameter(obj[i].toString()) + "&";
         }
         return parameters;
+    }
+
+    /**
+     * 生成UUID
+     * @return
+     */
+    public static String uuid(){
+        UUID uuid=UUID.randomUUID();
+        String str = uuid.toString();
+        String uuidStr=str.replace("-", "");
+        return uuidStr;
     }
 
     /**

@@ -22,12 +22,6 @@
         <if test="roleId!= null and roleId != '' ">
             AND u.ROLE_ID = #{roleId}
         </if>
-        <if test="innerFlag!= null and innerFlag != '' ">
-            AND u.INNER_FLAG = #{innerFlag}
-        </if>
-        <if test="companyCode!= null and companyCode != '' ">
-            AND c.COMPANY_CODE = #{companyCode}
-        </if>
         order by u.LAST_MODIFIED_DATE DESC
         <include refid="pageEnd"></include>
     </select>
@@ -50,12 +44,6 @@
         </if>
         <if test="roleId!= null and roleId != '' ">
             AND u.ROLE_ID = #{roleId}
-        </if>
-        <if test="innerFlag!= null and innerFlag != '' ">
-            AND u.INNER_FLAG = #{innerFlag}
-        </if>
-        <if test="companyCode!= null and companyCode != '' ">
-            AND c.COMPANY_CODE = #{companyCode}
         </if>
     </select>
 
@@ -83,9 +71,9 @@
     <!-- 新增用户 -->
     <insert id="addUser" parameterType="SysUser">
         insert into DEMO_SYS_USER
-          (USER_ID,USER_NAME,PASS_WORD,ROLE_ID,SALT,MOBILE,REAL_NAME,CREATE_USER,LAST_MODIFIED_USER,INNER_FLAG,COMPANY_CODE)
+          (USER_ID,USER_NAME,PASS_WORD,ROLE_ID,SALT,MOBILE,REAL_NAME,CREATE_USER,LAST_MODIFIED_USER)
         VALUES
-          (#{userId},#{userName},#{passWord},#{roleId},#{salt},#{mobile},#{realName},#{createUser},#{lastModifiedUser},#{innerFlag},#{companyCode})
+          (#{userId},#{userName},#{passWord},#{roleId},#{salt},#{mobile},#{realName},#{createUser},#{lastModifiedUser})
     </insert>
 
     <!-- 删除用户 -->
@@ -97,8 +85,7 @@
     <update id="updateUser" parameterType="SysUser">
         update DEMO_SYS_USER
           set ROLE_ID=#{roleId},REAL_NAME=#{realName},MOBILE=#{mobile},
-            LAST_MODIFIED_USER=#{lastModifiedUser},LAST_MODIFIED_DATE=#{lastModifiedDate},
-            INNER_FLAG = #{innerFlag},COMPANY_CODE = #{companyCode}
+            LAST_MODIFIED_USER=#{lastModifiedUser},LAST_MODIFIED_DATE=#{lastModifiedDate}
         where USER_ID=#{userId}
     </update>
 

@@ -1,10 +1,14 @@
 package com.critc.plat.aspect;
 
+import com.critc.plat.sys.model.*;
+import com.critc.plat.sys.service.LogService;
+import com.critc.plat.util.date.DateUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,44 +22,54 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class HttpAspect {
 
-//    controller下所有方法都记录操作日志
-//    @Pointcut("execution(public * com.critc..*.controller.*.*(..))")
-//    有LOG注解的方法记录操作日志
-//    @Pointcut("@annotation(com.critc.plat.aspect.Log)")
+    @Autowired
+    private LogService logService;
 
-    @Pointcut("execution(public * com.critc..*.controller.*.*(..)) " +
-            "&& !execution(public * com.critc..*.controller.*.index*(..))" +
-            "&& !execution(public * com.critc..*.controller.*.load*(..))")
+//    @Pointcut("execution(public * com.critc..*.controller.*.*(..))")
+
+//    增、删、改
+    @Pointcut("execution(public * com.critc..*.controller.*.add*(..)) " +
+            "|| execution(public * com.critc..*.controller.*.update*(..)) " +
+            "|| execution(public * com.critc..*.controller.*.delete*(..))" +
+            "|| @annotation(com.critc.plat.aspect.Log)")
     public void log() {
+    }
+
+    @Pointcut("execution(public * com.critc..*.controller.*.login*(..))")
+    public void log2() {
     }
 
     @Before("log()")
     public void doBefore(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        System.out.println(request.getRequestURL());
-//        System.out.println(request.getMethod());
-//        System.out.println(request.getRemoteAddr());
-//        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        //url
-//        logger.info("url={}", request.getRequestURL());
+        String url = request.getRequestURL().toString();
+        String ip = request.getRemoteAddr().toString();
+        String class_method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
 
-        //method
-//        logger.info("method={}", request.getMethod());
+        SysLog sysLog = new SysLog();
+        sysLog.setOperaUrl(url);
+        sysLog.setMethodName(class_method);
+        sysLog.setOperaIp(ip);
+        sysLog.setOperaDate(DateUtil.getSystemTime());
 
-        //ip
-//        logger.info("ip={}", request.getRemoteAddr());
-
-        //类方法
-//        logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-
-        //参数
-//        logger.info("args={}", joinPoint.getArgs());
+        logService.addLog(sysLog);
     }
 
-    @After("log()")
-    public void doAfter() {
-//        System.out.println("222");
-//        logger.info("222222222222");
+    @After("log2()")
+    public void doAfter(JoinPoint joinPoint) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        String url = request.getRequestURL().toString();
+        String ip = request.getRemoteAddr().toString();
+        String class_method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+
+        SysLog sysLog = new SysLog();
+        sysLog.setOperaUrl(url);
+        sysLog.setMethodName(class_method);
+        sysLog.setOperaIp(ip);
+        sysLog.setOperaDate(DateUtil.getSystemTime());
+
+        logService.addLog(sysLog);
     }
 }

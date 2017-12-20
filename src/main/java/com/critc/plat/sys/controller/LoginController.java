@@ -1,5 +1,6 @@
 package com.critc.plat.sys.controller;
 
+import com.critc.plat.aspect.Log;
 import com.critc.plat.sys.model.SysUser;
 import com.critc.plat.sys.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
@@ -24,7 +25,7 @@ public class LoginController {
     private SysUserService userService;
 
     @RequestMapping(value="/login",method= RequestMethod.GET)
-    public String login(HttpServletRequest request){
+    public String toLogin(HttpServletRequest request){
         return "plat/sys/login";
     }
 
