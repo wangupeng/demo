@@ -26,7 +26,7 @@ public class LogService {
     @Transactional
     public int addLog(SysLog sysLog){
         sysLog.setLogId(StringUtil.uuid());
-
+        sysLog.setOperaDate(DateUtil.getSystemTime());
         //获取当前登录用户
         SysUser sysUser = (SysUser) SecurityUtils.getSubject().getSession().getAttribute("userSession");
         sysLog.setUserName(sysUser.getUserName());

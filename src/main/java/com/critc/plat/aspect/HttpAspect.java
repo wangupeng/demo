@@ -51,7 +51,6 @@ public class HttpAspect {
         sysLog.setOperaUrl(url);
         sysLog.setMethodName(class_method);
         sysLog.setOperaIp(ip);
-        sysLog.setOperaDate(DateUtil.getSystemTime());
 
         logService.addLog(sysLog);
     }
@@ -68,7 +67,6 @@ public class HttpAspect {
         sysLog.setOperaUrl(url);
         sysLog.setMethodName(class_method);
         sysLog.setOperaIp(ip);
-        sysLog.setOperaDate(DateUtil.getSystemTime());
 
         logService.addLog(sysLog);
     }
