@@ -1,7 +1,5 @@
 package com.critc.plat.common.exception;
 
-import com.critc.plat.util.result.Result;
-import com.critc.plat.util.result.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExceptionHandle {
     private static Logger logger = LoggerFactory.getLogger("sysLog");
 
-    @ExceptionHandler(value = Exception.class)
+    /*@ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ModelAndView handle(Exception e) {
         if (e instanceof MyException) {
@@ -27,16 +25,29 @@ public class ExceptionHandle {
             mv.addObject("errorMsg",e.getMessage());
             logger.info( ((MyException) e).getCode() +":"+((MyException) e).getMessage());
             return mv;
-
-//            return ResultUtil.error(myException.getCode(), myException.getMessage());
         }else {
             ModelAndView mv = new ModelAndView("plat/common/500");//error页面
             mv.addObject("errorMsg",e.getMessage());
-            logger.info(e.getMessage());
+            logger.info("【系统异常】{}",e.getMessage());
             return mv;
-
-//            logger.error("【系统异常】{}", e);
-//            return ResultUtil.error(-1, e.getMessage());
         }
+    }*/
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public ModelAndView handle(Exception e) {
+        ModelAndView mv = new ModelAndView("plat/common/500");//error页面
+        mv.addObject("errorMsg",e.getMessage());
+        logger.info("【系统异常】{}",e.getMessage());
+        return mv;
+    }
+
+    @ExceptionHandler(value = MyException.class)
+    @ResponseBody
+    public ModelAndView myHandle(MyException e) {
+            ModelAndView mv = new ModelAndView("plat/common/500");//error页面
+            mv.addObject("errorMsg",e.getMessage());
+            logger.info("【系统异常】{}",((MyException) e).getCode() +":"+((MyException) e).getMessage());
+            return mv;
     }
 }

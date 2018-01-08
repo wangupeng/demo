@@ -1,9 +1,11 @@
 package com.critc.plat.sys.model;
 
+import com.critc.plat.common.base.BaseModel;
+
 /**
  * Created by wangyupeng on 2017/12/20.
  */
-public class SysLog {
+public class SysLog extends BaseModel{
     private String logId;
     private String userName;
     private String operaIp;

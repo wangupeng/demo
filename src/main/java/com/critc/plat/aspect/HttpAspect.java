@@ -1,8 +1,10 @@
 package com.critc.plat.aspect;
 
 import com.critc.plat.sys.model.*;
-import com.critc.plat.sys.service.LogService;
+import com.critc.plat.sys.service.SysLogService;
 import com.critc.plat.util.date.DateUtil;
+import com.critc.plat.util.string.StringUtil;
+import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HttpAspect {
 
     @Autowired
-    private LogService logService;
+    private SysLogService logService;
 
 //    @Pointcut("execution(public * com.critc..*.controller.*.*(..))")
 
@@ -41,22 +43,19 @@ public class HttpAspect {
 
     @Before("log()")
     public void doBefore(JoinPoint joinPoint) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String url = request.getRequestURL().toString();
-        String ip = request.getRemoteAddr().toString();
-        String class_method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-
-        SysLog sysLog = new SysLog();
-        sysLog.setOperaUrl(url);
-        sysLog.setMethodName(class_method);
-        sysLog.setOperaIp(ip);
-
-        logService.addLog(sysLog);
+        addLog(joinPoint);
     }
 
     @After("log2()")
     public void doAfter(JoinPoint joinPoint) {
+        addLog(joinPoint);
+    }
+
+    /**
+     * 插入日志表
+     * @param joinPoint
+     */
+    public void addLog(JoinPoint joinPoint){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String url = request.getRequestURL().toString();
@@ -64,10 +63,13 @@ public class HttpAspect {
         String class_method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
 
         SysLog sysLog = new SysLog();
+        sysLog.setLogId(StringUtil.uuid());
         sysLog.setOperaUrl(url);
         sysLog.setMethodName(class_method);
         sysLog.setOperaIp(ip);
-
-        logService.addLog(sysLog);
+        sysLog.setOperaDate(DateUtil.getSystemTime());
+        SysUser sysUser = (SysUser) SecurityUtils.getSubject().getSession().getAttribute("userSession");
+        sysLog.setUserName(sysUser.getUserName());
+        logService.add(sysLog);
     }
 }

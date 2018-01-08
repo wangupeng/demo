@@ -28,6 +28,7 @@ public class SysUserService {
      */
     public List<SysUser> listUser(SysUser sysUser){
         List<SysUser> list = userDao.listUser(sysUser);
+        System.out.println(list);
         return list;
     }
 

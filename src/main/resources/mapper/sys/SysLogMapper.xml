@@ -2,10 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.critc.plat.sys.dao.SysLogDao">
     <!-- 插入操作日志 -->
-    <insert id="addLog" parameterType="SysLog">
+    <insert id="add" parameterType="SysLog">
+
       insert into DEMO_SYS_LOG(LOG_ID, USER_NAME, OPERA_IP, OPERA_DATE, OPERA_URL, METHOD_NAME)
       VALUES (#{logId},#{userName},#{operaIp},to_date(#{operaDate},'yyyy-MM-dd hh24:mi:ss') ,#{operaUrl},#{methodName} )
     </insert>
+
+    <select id="selectByPage"  parameterType="SysLog">
+        <include refid="pageStart"></include>
+          select * from DEMO_SYS_LOG where 1=1
+            <if test="userName!= null and userName != '' ">
+                AND USER_NAME = #{userName}
+            </if>
+            <if test="userName!= null and userName != '' ">
+                AND OPERA_DATE = #{operaDate}
+            </if>
+        <include refid="pageEnd"></include>
+    </select>
 
 
     <sql id="pageStart">

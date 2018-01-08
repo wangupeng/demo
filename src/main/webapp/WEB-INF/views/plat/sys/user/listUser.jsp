@@ -137,7 +137,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-xs-12">${ pageNavigate.pageModel}</div>
+        <div class="col-xs-12">${ pageNavigate.getPageModel}</div>
     </div>
     <div id="dialog-viewLogin" class="hide center">
     </div>
